@@ -7,10 +7,10 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/cita")
-public interface IObtenerCitaPorId {
+@Path("/cita-vigentes")
+public interface IObtenerCitasVigentesPorIdCliente {
   @GET
-  @Path("/{idCita}")
+  @Path("/{idCliente}")
   @Produces(MediaType.APPLICATION_JSON)
-  Response getCitaPorId(@PathParam("idCita") String idCita);
+  Response getCitaVigentesPorIdCliente(@PathParam("idCliente") String idCliente);
 }

@@ -7,10 +7,7 @@ import org.veterinaria.aplicacion.puertos.salida.AtencionPeluquero.IAtencionPelu
 import org.veterinaria.aplicacion.puertos.salida.Cita.ICitaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.TipoCita.ITipoCitaRepositorio;
 import org.veterinaria.dominio.modelo.AtencionPeluquero.AtencionPeluqueroEntidad;
-import org.veterinaria.dominio.modelo.Cita.CitaActualizar;
-import org.veterinaria.dominio.modelo.Cita.CitaCrear;
-import org.veterinaria.dominio.modelo.Cita.CitaEntidad;
-import org.veterinaria.dominio.modelo.Cita.CitaSalida;
+import org.veterinaria.dominio.modelo.Cita.*;
 import org.veterinaria.dominio.modelo.Mascota.Mascota;
 import org.veterinaria.dominio.modelo.TipoCita.TipoCitaEntidad;
 import org.veterinaria.infraestructura.adaptador.salida.Mascota.MascotaAPI;
@@ -19,6 +16,8 @@ import java.util.List;
 
 @ApplicationScoped
 public class CitaServicio implements ICitaServicio {
+  public static final String FECHA_INVALIDA = "La fecha no es valida";
+  public static final String CITA_PELUQUERIA = "Cita Peluqueria";
   @Inject
   ICitaRepositorio repositorio;
   @Inject
@@ -30,25 +29,8 @@ public class CitaServicio implements ICitaServicio {
   IAtencionPeluqueroRepositorio atencionPeluqueroRepositorio;
 
   @Override
-  public CitaSalida crearCita(CitaCrear cita) {
-    Mascota mascota = mascotaService.getMascotaPorId(cita.getIdMascota());
-    if (mascota == null) return new CitaSalida();
-    TipoCitaEntidad tipoCitaEntidad = tipoCitaRepositorio.obtenerTipoCitaPorId(cita.getIdTipoCita());
-    if (tipoCitaEntidad == null || tipoCitaEntidad.getTipoCita() == null) return new CitaSalida();
-    if (tipoCitaEntidad.getTipoCita().equals("Cita Peluqueria")) {
-      cita.getAtencionesPeluqueria().forEach(p -> {
-        AtencionPeluqueroEntidad atencionPeluqueroEntidad = atencionPeluqueroRepositorio.obtenerAtencionPeluqueroPorId(p);
-      });
-    }
-    CitaEntidad citaEntidad = new CitaEntidad();
-    citaEntidad.setIdMascota(cita.getIdMascota());
-    citaEntidad.setIdTipoCita(cita.getIdTipoCita());
-    citaEntidad.setAtencionesPeluqueria(cita.getAtencionesPeluqueria());
-    citaEntidad.setFecha(cita.getFecha());
-    citaEntidad.setTurno(cita.getTurno());
-    citaEntidad.setObservaciones(cita.getObservaciones());
-    citaEntidad = repositorio.crearCita(citaEntidad);
-    return this.obtenerCitaPorId(citaEntidad.getId().toString());
+  public List<CitaSalida> obtenerCita() {
+    return repositorio.obtenerTodosCita().parallelStream().map(this::getCitaSalida).toList();
   }
 
   @Override
@@ -58,23 +40,39 @@ public class CitaServicio implements ICitaServicio {
   }
 
   @Override
+  public CitaSalida crearCita(CitaCrear cita) {
+    if (cita.validarFecha(cita.getFecha())) {
+      throw new RuntimeException(FECHA_INVALIDA);
+    }
+    Mascota mascota = mascotaService.getMascotaPorId(cita.getIdMascota());
+    if (mascota == null) return new CitaSalida();
+    TipoCitaEntidad tipoCitaEntidad = tipoCitaRepositorio.obtenerTipoCitaPorId(cita.getIdTipoCita());
+    if (tipoCitaEntidad == null || tipoCitaEntidad.getTipoCita() == null) return new CitaSalida();
+    if (tipoCitaEntidad.getTipoCita().equals(CITA_PELUQUERIA)) {
+      cita.getAtencionesPeluqueria().forEach(p -> {
+        AtencionPeluqueroEntidad atencionPeluqueroEntidad = atencionPeluqueroRepositorio.obtenerAtencionPeluqueroPorId(p);
+      });
+    }
+    CitaEntidad citaEntidad = crearCitaEntidad(cita.getIdCliente(), cita.getIdMascota(), cita.getIdTipoCita(), cita.getAtencionesPeluqueria(), cita.getFecha(), cita.getTurno(), cita.getObservaciones());
+    citaEntidad = repositorio.crearCita(citaEntidad);
+    return this.obtenerCitaPorId(citaEntidad.getId().toString());
+  }
+
+  @Override
   public CitaSalida actualizarCita(String idCita, CitaActualizar citaActualizar) {
+    if (citaActualizar.validarFecha(citaActualizar.getFecha())) {
+      throw new RuntimeException(FECHA_INVALIDA);
+    }
     Mascota mascota = mascotaService.getMascotaPorId(citaActualizar.getIdMascota());
     if (mascota == null) return new CitaSalida();
     TipoCitaEntidad tipoCitaEntidad = tipoCitaRepositorio.obtenerTipoCitaPorId(citaActualizar.getIdTipoCita());
     if (tipoCitaEntidad == null || tipoCitaEntidad.getTipoCita() == null) return new CitaSalida();
-    if (tipoCitaEntidad.getTipoCita().equals("Cita Peluqueria")) {
+    if (tipoCitaEntidad.getTipoCita().equals(CITA_PELUQUERIA)) {
       citaActualizar.getAtencionesPeluqueria().forEach(p -> {
         AtencionPeluqueroEntidad atencionPeluqueroEntidad = atencionPeluqueroRepositorio.obtenerAtencionPeluqueroPorId(p);
       });
     }
-    CitaEntidad citaEntidad = new CitaEntidad();
-    citaEntidad.setIdMascota(citaActualizar.getIdMascota());
-    citaEntidad.setIdTipoCita(citaActualizar.getIdTipoCita());
-    citaEntidad.setAtencionesPeluqueria(citaActualizar.getAtencionesPeluqueria());
-    citaEntidad.setFecha(citaActualizar.getFecha());
-    citaEntidad.setTurno(citaActualizar.getTurno());
-    citaEntidad.setObservaciones(citaActualizar.getObservaciones());
+    CitaEntidad citaEntidad = crearCitaEntidad(citaActualizar.getIdCliente(), citaActualizar.getIdMascota(), citaActualizar.getIdTipoCita(), citaActualizar.getAtencionesPeluqueria(), citaActualizar.getFecha(), citaActualizar.getTurno(), citaActualizar.getObservaciones());
     repositorio.actualizarCita(idCita, citaEntidad);
     return this.obtenerCitaPorId(idCita);
   }
@@ -85,20 +83,16 @@ public class CitaServicio implements ICitaServicio {
     return getCitaSalida(citaEntidad);
   }
 
-  @Override
-  public List<CitaSalida> obtenerCita() {
-    return repositorio.obtenerTodosCita().parallelStream().map(this::getCitaSalida).toList();
-  }
-
   private CitaSalida getCitaSalida(CitaEntidad citaEntidad) {
     return CitaSalida.builder()
           .id(citaEntidad.getId().toString())
+          .idCliente(citaEntidad.getIdCliente())
           .idMascota(citaEntidad.getIdMascota())
           .nombreMascota(mascotaService.getMascotaPorId(citaEntidad.getIdMascota()).getNombre())
           .idTipoCita(citaEntidad.getIdTipoCita())
           .tipoCita(tipoCitaRepositorio.obtenerTipoCitaPorId(citaEntidad.getIdTipoCita()).getTipoCita())
           .atencionesPeluqueria(
-                tipoCitaRepositorio.obtenerTipoCitaPorId(citaEntidad.getIdTipoCita()).getTipoCita().equals("Cita Peluqueria") ?
+                tipoCitaRepositorio.obtenerTipoCitaPorId(citaEntidad.getIdTipoCita()).getTipoCita().equals(CITA_PELUQUERIA) ?
                       citaEntidad.getAtencionesPeluqueria().parallelStream()
                             .map(q -> {
                               AtencionPeluqueroEntidad atencionPeluqueroEntidad = atencionPeluqueroRepositorio.obtenerAtencionPeluqueroPorId(q);
@@ -107,9 +101,31 @@ public class CitaServicio implements ICitaServicio {
                             .toList()
                       : null
           )
-          .fecha(citaEntidad.getFecha())
+          .fecha(CitaPadre.convertirFechaAString(citaEntidad.getFecha()))
           .turno(citaEntidad.getTurno())
           .observaciones(citaEntidad.getObservaciones())
           .build();
+  }
+
+  private CitaEntidad crearCitaEntidad(String idCliente, String idMascota, String idTipoCita, List<String> atencionesPeluqueria, String fecha, String turno, String observaciones) {
+    CitaEntidad citaEntidad = new CitaEntidad();
+    citaEntidad.setIdCliente(idCliente);
+    citaEntidad.setIdMascota(idMascota);
+    citaEntidad.setIdTipoCita(idTipoCita);
+    citaEntidad.setAtencionesPeluqueria(atencionesPeluqueria);
+    citaEntidad.setFecha(CitaPadre.convertirFecha(fecha));
+    citaEntidad.setTurno(turno);
+    citaEntidad.setObservaciones(observaciones);
+    return citaEntidad;
+  }
+
+  @Override
+  public List<CitaSalida> obtenerCitasVigentesPorIdCliente(String idCliente) {
+    return repositorio.obtenerCitasVigentesPorIdCliente(idCliente).parallelStream().map(this::getCitaSalida).toList();
+  }
+
+  @Override
+  public List<CitaSalida> obtenerCitasVigentes() {
+    return repositorio.obtenerCitasVigentes().parallelStream().map(this::getCitaSalida).toList();
   }
 }

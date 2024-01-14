@@ -1,4 +1,4 @@
-package org.veterinaria.aplicacion.puertos.entrada.Cita;
+package org.veterinaria.aplicacion.puertos.entrada.Turno;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -7,10 +7,10 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/cita")
-public interface IObtenerCitaPorId {
+@Path("/turno")
+public interface IObtenerTurnoPorId {
   @GET
-  @Path("/{idCita}")
+  @Path("/{idTurno}")
   @Produces(MediaType.APPLICATION_JSON)
-  Response getCitaPorId(@PathParam("idCita") String idCita);
+  Response getTurnoPorId(@PathParam("idTurno") String idTurno);
 }

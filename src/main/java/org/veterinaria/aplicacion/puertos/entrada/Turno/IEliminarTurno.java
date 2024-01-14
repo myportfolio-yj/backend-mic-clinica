@@ -1,4 +1,4 @@
-package org.veterinaria.aplicacion.puertos.entrada.Cita;
+package org.veterinaria.aplicacion.puertos.entrada.Turno;
 
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.Path;
@@ -7,10 +7,10 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/cita")
-public interface IEliminarCita {
+@Path("/turno")
+public interface IEliminarTurno {
   @DELETE
-  @Path("/{idCita}")
+  @Path("/{idTurno}")
   @Produces(MediaType.APPLICATION_JSON)
-  Response deleteCita(@PathParam("idCita") String idCita);
+  Response deleteTurno(@PathParam("idTurno") String idTurno);
 }

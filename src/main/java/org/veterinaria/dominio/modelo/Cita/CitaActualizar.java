@@ -1,16 +1,16 @@
 package org.veterinaria.dominio.modelo.Cita;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CitaActualizar {
+@EqualsAndHashCode(callSuper = true)
+public class CitaActualizar extends CitaPadre {
+  private String idCliente;
   private String idMascota;
   private String idTipoCita;
   private List<String> atencionesPeluqueria;

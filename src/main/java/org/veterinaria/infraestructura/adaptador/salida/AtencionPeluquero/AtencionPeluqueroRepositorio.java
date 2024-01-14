@@ -4,9 +4,7 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 import org.veterinaria.aplicacion.puertos.salida.AtencionPeluquero.IAtencionPeluqueroRepositorio;
-import org.veterinaria.aplicacion.puertos.salida.TipoCita.ITipoCitaRepositorio;
 import org.veterinaria.dominio.modelo.AtencionPeluquero.AtencionPeluqueroEntidad;
-import org.veterinaria.dominio.modelo.TipoCita.TipoCitaEntidad;
 
 import java.util.List;
 import java.util.Optional;

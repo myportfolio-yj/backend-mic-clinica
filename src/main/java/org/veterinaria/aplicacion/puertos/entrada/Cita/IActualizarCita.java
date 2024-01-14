@@ -4,6 +4,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.veterinaria.dominio.modelo.Cita.CitaActualizar;
+
 @Path("/cita")
 public interface IActualizarCita {
   @PUT

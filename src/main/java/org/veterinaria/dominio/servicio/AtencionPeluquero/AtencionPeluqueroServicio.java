@@ -3,15 +3,10 @@ package org.veterinaria.dominio.servicio.AtencionPeluquero;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.veterinaria.aplicacion.puertos.salida.AtencionPeluquero.IAtencionPeluqueroRepositorio;
-import org.veterinaria.aplicacion.puertos.salida.TipoCita.ITipoCitaRepositorio;
 import org.veterinaria.dominio.modelo.AtencionPeluquero.AtencionPeluqueroActualizar;
 import org.veterinaria.dominio.modelo.AtencionPeluquero.AtencionPeluqueroCrear;
 import org.veterinaria.dominio.modelo.AtencionPeluquero.AtencionPeluqueroEntidad;
 import org.veterinaria.dominio.modelo.AtencionPeluquero.AtencionPeluqueroSalida;
-import org.veterinaria.dominio.modelo.TipoCita.TipoCitaActualizar;
-import org.veterinaria.dominio.modelo.TipoCita.TipoCitaCrear;
-import org.veterinaria.dominio.modelo.TipoCita.TipoCitaEntidad;
-import org.veterinaria.dominio.modelo.TipoCita.TipoCitaSalida;
 
 import java.util.List;
 

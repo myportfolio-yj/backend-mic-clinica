@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -13,10 +14,11 @@ import java.util.List;
 @MongoEntity(collection = "collect-Cita")
 public class CitaEntidad extends PanacheMongoEntity {
   private ObjectId id;
+  private String idCliente;
   private String idMascota;
   private String idTipoCita;
   private List<String> atencionesPeluqueria;
-  private String fecha;
+  private Date fecha;
   private String turno;
   private String observaciones;
   private Boolean delete;

@@ -1,12 +1,12 @@
 package org.veterinaria.dominio.modelo.Cita;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @Data
 @Builder
@@ -15,6 +15,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection
 public class CitaSalida {
   private String id;
+  private String idCliente;
   private String nombreMascota;
   private String idMascota;
   private String tipoCita;

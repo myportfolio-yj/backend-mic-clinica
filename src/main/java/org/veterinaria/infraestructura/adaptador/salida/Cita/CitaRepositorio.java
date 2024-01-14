@@ -6,14 +6,33 @@ import org.bson.types.ObjectId;
 import org.veterinaria.aplicacion.puertos.salida.Cita.ICitaRepositorio;
 import org.veterinaria.dominio.modelo.Cita.CitaEntidad;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
+
 @ApplicationScoped
 public class CitaRepositorio implements PanacheMongoRepository<CitaEntidad>, ICitaRepositorio {
   @Override
   public List<CitaEntidad> obtenerTodosCita() {
     return listAll().parallelStream()
           .filter(p -> p.getDelete() == null || !p.getDelete())
+          .toList();
+  }
+
+  @Override
+  public List<CitaEntidad> obtenerCitasVigentes() {
+    LocalDate hoy = LocalDate.now();
+    return this.obtenerTodosCita().parallelStream()
+          .filter(p -> p.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(hoy) ||
+                p.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(hoy))
+          .toList();
+  }
+
+  @Override
+  public List<CitaEntidad> obtenerCitasVigentesPorIdCliente(String idCliente) {
+    return this.obtenerCitasVigentes().parallelStream()
+          .filter(p -> p.getIdCliente().equals(idCliente))
           .toList();
   }
 
@@ -52,8 +71,9 @@ public class CitaRepositorio implements PanacheMongoRepository<CitaEntidad>, ICi
   public CitaEntidad eliminarCita(String idCita) {
     CitaEntidad cita = this.obtenerCitaPorId(idCita);
     cita.setDelete(true);
-    return this.actualizarCita(idCita,cita);
+    return this.actualizarCita(idCita, cita);
   }
+
   private Optional<CitaEntidad> findEntidadById(String idCita) {
     return findByIdOptional(new ObjectId(idCita));
   }

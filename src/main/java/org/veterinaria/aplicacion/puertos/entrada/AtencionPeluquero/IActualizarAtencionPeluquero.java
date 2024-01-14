@@ -4,7 +4,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.veterinaria.dominio.modelo.AtencionPeluquero.AtencionPeluqueroActualizar;
-import org.veterinaria.dominio.modelo.TipoCita.TipoCitaActualizar;
 
 @Path("/atencionpeluquero")
 public interface IActualizarAtencionPeluquero {
