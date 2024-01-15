@@ -16,12 +16,4 @@ public interface MascotaAPI {
   @Path("/mascota/{idMascota}")
   @Produces(MediaType.APPLICATION_JSON)
   Mascota getMascotaPorId(@PathParam("idMascota") String idMascota);
-
-/*
-  @GET
-  @Path("/mascota")
-  @Produces(MediaType.APPLICATION_JSON)
-  Set<Mascota> getMascota();
- */
-
 }
