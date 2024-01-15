@@ -6,6 +6,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.veterinaria.aplicacion.puertos.salida.atencionpeluquero.IAtencionPeluqueroRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.cita.ICitaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.tipocita.ITipoCitaRepositorio;
+import org.veterinaria.dominio.FechaInvalidaException;
 import org.veterinaria.dominio.modelo.atencionpeluquero.AtencionPeluqueroEntidad;
 import org.veterinaria.dominio.modelo.cita.*;
 import org.veterinaria.dominio.modelo.mascota.Mascota;
@@ -42,7 +43,7 @@ public class CitaServicio implements ICitaServicio {
   @Override
   public CitaSalida crearCita(CitaCrear cita) {
     if (cita.validarFecha(cita.getFecha())) {
-      throw new RuntimeException(FECHA_INVALIDA);
+      throw new FechaInvalidaException(FECHA_INVALIDA);
     }
     Mascota mascota = mascotaService.getMascotaPorId(cita.getIdMascota());
     if (mascota == null) return new CitaSalida();
@@ -55,13 +56,13 @@ public class CitaServicio implements ICitaServicio {
     }
     CitaEntidad citaEntidad = crearCitaEntidad(cita.getIdCliente(), cita.getIdMascota(), cita.getIdTipoCita(), cita.getAtencionesPeluqueria(), cita.getFecha(), cita.getTurno(), cita.getObservaciones());
     citaEntidad = repositorio.crearCita(citaEntidad);
-    return this.obtenerCitaPorId(citaEntidad.getId().toString());
+    return this.obtenerCitaPorId(citaEntidad.id.toString());
   }
 
   @Override
   public CitaSalida actualizarCita(String idCita, CitaActualizar citaActualizar) {
     if (citaActualizar.validarFecha(citaActualizar.getFecha())) {
-      throw new RuntimeException(FECHA_INVALIDA);
+      throw new FechaInvalidaException(FECHA_INVALIDA);
     }
     Mascota mascota = mascotaService.getMascotaPorId(citaActualizar.getIdMascota());
     if (mascota == null) return new CitaSalida();
@@ -85,7 +86,7 @@ public class CitaServicio implements ICitaServicio {
 
   private CitaSalida getCitaSalida(CitaEntidad citaEntidad) {
     return CitaSalida.builder()
-          .id(citaEntidad.getId().toString())
+          .id(citaEntidad.id.toString())
           .idCliente(citaEntidad.getIdCliente())
           .idMascota(citaEntidad.getIdMascota())
           .nombreMascota(mascotaService.getMascotaPorId(citaEntidad.getIdMascota()).getNombre())

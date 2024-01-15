@@ -19,7 +19,7 @@ public class TipoCitaServicio implements ITipoCitaServicio {
   public TipoCitaSalida obtenerTipoCitaPorId(String idTipoCita) {
     TipoCitaEntidad tipoCitaEntidad = repositorio.obtenerTipoCitaPorId(idTipoCita);
     return TipoCitaSalida.builder()
-          .id(tipoCitaEntidad.getId().toString())
+          .id(tipoCitaEntidad.id.toString())
           .tipoCita(tipoCitaEntidad.getTipoCita())
           .build();
   }
@@ -37,14 +37,14 @@ public class TipoCitaServicio implements ITipoCitaServicio {
     TipoCitaEntidad tipoCitaEntidad = new TipoCitaEntidad();
     tipoCitaEntidad.setTipoCita(tipoCita.getTipoCita());
     tipoCitaEntidad = repositorio.crearTipoCita(tipoCitaEntidad);
-    return this.obtenerTipoCitaPorId(tipoCitaEntidad.getId().toString());
+    return this.obtenerTipoCitaPorId(tipoCitaEntidad.id.toString());
   }
 
   @Override
   public TipoCitaSalida eliminarTipoCita(String idTipoCita) {
     TipoCitaEntidad tipoCitaEntidad = repositorio.eliminarTipoCita(idTipoCita);
     return TipoCitaSalida.builder()
-          .id(tipoCitaEntidad.getId().toString())
+          .id(tipoCitaEntidad.id.toString())
           .tipoCita(tipoCitaEntidad.getTipoCita())
           .build();
   }
@@ -53,7 +53,7 @@ public class TipoCitaServicio implements ITipoCitaServicio {
   public List<TipoCitaSalida> obtenerTipoCita() {
     List<TipoCitaEntidad> tipoCita = repositorio.obtenerTodosTipoCita();
     return tipoCita.parallelStream().map(p -> TipoCitaSalida.builder()
-                .id(p.getId().toString())
+                .id(p.id.toString())
                 .tipoCita(p.getTipoCita())
                 .build())
           .toList();

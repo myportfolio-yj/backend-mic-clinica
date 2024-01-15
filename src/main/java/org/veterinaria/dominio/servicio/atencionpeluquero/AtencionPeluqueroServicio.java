@@ -28,14 +28,14 @@ public class AtencionPeluqueroServicio implements IAtencionPeluqueroServicio {
     AtencionPeluqueroEntidad atencionPeluqueroEntidad = new AtencionPeluqueroEntidad();
     atencionPeluqueroEntidad.setAtencionPeluquero(atencionPeluquero.getAtencionPeluquero());
     atencionPeluqueroEntidad = repositorio.crearAtencionPeluquero(atencionPeluqueroEntidad);
-    return this.obtenerAtencionPeluqueroPorId(atencionPeluqueroEntidad.getId().toString());
+    return this.obtenerAtencionPeluqueroPorId(atencionPeluqueroEntidad.id.toString());
   }
 
   @Override
   public AtencionPeluqueroSalida eliminarAtencionPeluquero(String idAtencionPeluquero) {
     AtencionPeluqueroEntidad atencionPeluqueroEntidad = repositorio.eliminarAtencionPeluquero(idAtencionPeluquero);
     return AtencionPeluqueroSalida.builder()
-          .id(atencionPeluqueroEntidad.getId().toString())
+          .id(atencionPeluqueroEntidad.id.toString())
           .atencionPeluquero(atencionPeluqueroEntidad.getAtencionPeluquero())
           .build();
   }
@@ -44,7 +44,7 @@ public class AtencionPeluqueroServicio implements IAtencionPeluqueroServicio {
   public AtencionPeluqueroSalida obtenerAtencionPeluqueroPorId(String idAtencionPeluquero) {
     AtencionPeluqueroEntidad atencionPeluqueroEntidad = repositorio.obtenerAtencionPeluqueroPorId(idAtencionPeluquero);
     return AtencionPeluqueroSalida.builder()
-          .id(atencionPeluqueroEntidad.getId().toString())
+          .id(atencionPeluqueroEntidad.id.toString())
           .atencionPeluquero(atencionPeluqueroEntidad.getAtencionPeluquero())
           .build();
   }

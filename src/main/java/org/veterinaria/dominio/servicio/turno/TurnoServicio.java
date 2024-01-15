@@ -25,10 +25,10 @@ public class TurnoServicio implements ITurnoServicio {
     TurnoEntidad turnoEntidad = repositorio.obtenerTurnoPorId(idTipoCita);
     TipoCitaEntidad citaEntidad = repositorioTipoCita.obtenerTipoCitaPorId(turnoEntidad.getIdTipoCita());
     return TurnoSalida.builder()
-          .id(turnoEntidad.getId().toString())
+          .id(turnoEntidad.id.toString())
           .tipoCita(
                 TipoCitaSalida.builder()
-                      .id(citaEntidad.getId().toString())
+                      .id(citaEntidad.id.toString())
                       .tipoCita(citaEntidad.getTipoCita())
                       .build()
           )
@@ -57,7 +57,7 @@ public class TurnoServicio implements ITurnoServicio {
     turnoEntidad.setTurno(turno.getTurno());
     turnoEntidad.setValor(turno.getValor());
     turnoEntidad = repositorio.crearTurno(turnoEntidad);
-    return this.obtenerTurnoPorId(turnoEntidad.getId().toString());
+    return this.obtenerTurnoPorId(turnoEntidad.id.toString());
   }
 
   @Override
@@ -65,10 +65,10 @@ public class TurnoServicio implements ITurnoServicio {
     TurnoEntidad turnoEntidad = repositorio.eliminarTurno(idTurno);
     TipoCitaEntidad citaEntidad = repositorioTipoCita.obtenerTipoCitaPorId(turnoEntidad.getIdTipoCita());
     return TurnoSalida.builder()
-          .id(turnoEntidad.getId().toString())
+          .id(turnoEntidad.id.toString())
           .tipoCita(
                 TipoCitaSalida.builder()
-                      .id(citaEntidad.getId().toString())
+                      .id(citaEntidad.id.toString())
                       .tipoCita(citaEntidad.getTipoCita())
                       .build()
           )
@@ -84,10 +84,10 @@ public class TurnoServicio implements ITurnoServicio {
     return turnos.parallelStream().map(p -> {
             TipoCitaEntidad citaEntidad = repositorioTipoCita.obtenerTipoCitaPorId(p.getIdTipoCita());
             return TurnoSalida.builder()
-                  .id(p.getId().toString())
+                  .id(p.id.toString())
                   .tipoCita(
                         TipoCitaSalida.builder()
-                              .id(citaEntidad.getId().toString())
+                              .id(citaEntidad.id.toString())
                               .tipoCita(citaEntidad.getTipoCita())
                               .build()
                   )
