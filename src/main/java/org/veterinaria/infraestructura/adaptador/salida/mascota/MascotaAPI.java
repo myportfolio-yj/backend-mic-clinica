@@ -8,9 +8,16 @@ import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.veterinaria.dominio.modelo.mascota.MascotaMinSalida;
 
+import java.util.List;
+
 @Path("/")
 @RegisterRestClient
 public interface MascotaAPI {
+
+  @GET
+  @Path("/mascota")
+  @Produces(MediaType.APPLICATION_JSON)
+  List<MascotaMinSalida> getMascotas();
 
   @GET
   @Path("/mascota/{idMascota}")

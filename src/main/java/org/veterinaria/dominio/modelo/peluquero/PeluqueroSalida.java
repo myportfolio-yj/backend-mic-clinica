@@ -1,6 +1,5 @@
-package org.veterinaria.dominio.modelo.mascota;
+package org.veterinaria.dominio.modelo.peluquero;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @RegisterForReflection
-public class MascotaMinSalida extends MascotaPadre {
+public class PeluqueroSalida {
   private String id;
-  private String codIdentificacion;
+  private String nombres;
+  private String apellidos;
 }
