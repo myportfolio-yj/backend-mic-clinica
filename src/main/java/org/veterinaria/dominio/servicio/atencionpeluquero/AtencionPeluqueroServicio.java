@@ -53,7 +53,7 @@ public class AtencionPeluqueroServicio implements IAtencionPeluqueroServicio {
   public List<AtencionPeluqueroSalida> obtenerAtencionPeluquero() {
     List<AtencionPeluqueroEntidad> atencionPeluqueroEntidads = repositorio.obtenerTodosAtencionPeluquero();
     return atencionPeluqueroEntidads.parallelStream().map(p -> AtencionPeluqueroSalida.builder()
-                .id(p.getId().toString())
+                .id(p.id.toString())
                 .atencionPeluquero(p.getAtencionPeluquero())
                 .build())
           .toList();

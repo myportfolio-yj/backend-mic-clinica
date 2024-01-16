@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Especie {
+public class AlergiaSalida {
   private String id;
-  private String especie;
-
+  private String alergia;
 }

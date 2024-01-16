@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 public class CitaPadre {
-  public static final String FORMATO_FECHA = "dd/MM/yyyy";
+  private static final String FORMATO_FECHA = "dd/MM/yyyy";
 
   public static Date convertirFecha(String fecha) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMATO_FECHA);

@@ -9,7 +9,7 @@ import org.veterinaria.aplicacion.puertos.salida.tipocita.ITipoCitaRepositorio;
 import org.veterinaria.dominio.FechaInvalidaException;
 import org.veterinaria.dominio.modelo.atencionpeluquero.AtencionPeluqueroEntidad;
 import org.veterinaria.dominio.modelo.cita.*;
-import org.veterinaria.dominio.modelo.mascota.Mascota;
+import org.veterinaria.dominio.modelo.mascota.MascotaMinSalida;
 import org.veterinaria.dominio.modelo.tipocita.TipoCitaEntidad;
 import org.veterinaria.infraestructura.adaptador.salida.mascota.MascotaAPI;
 
@@ -45,7 +45,7 @@ public class CitaServicio implements ICitaServicio {
     if (cita.validarFecha(cita.getFecha())) {
       throw new FechaInvalidaException(FECHA_INVALIDA);
     }
-    Mascota mascota = mascotaService.getMascotaPorId(cita.getIdMascota());
+    MascotaMinSalida mascota = mascotaService.getMascotaPorId(cita.getIdMascota());
     if (mascota == null) return new CitaSalida();
     TipoCitaEntidad tipoCitaEntidad = tipoCitaRepositorio.obtenerTipoCitaPorId(cita.getIdTipoCita());
     if (tipoCitaEntidad == null || tipoCitaEntidad.getTipoCita() == null) return new CitaSalida();
@@ -64,7 +64,7 @@ public class CitaServicio implements ICitaServicio {
     if (citaActualizar.validarFecha(citaActualizar.getFecha())) {
       throw new FechaInvalidaException(FECHA_INVALIDA);
     }
-    Mascota mascota = mascotaService.getMascotaPorId(citaActualizar.getIdMascota());
+    MascotaMinSalida mascota = mascotaService.getMascotaPorId(citaActualizar.getIdMascota());
     if (mascota == null) return new CitaSalida();
     TipoCitaEntidad tipoCitaEntidad = tipoCitaRepositorio.obtenerTipoCitaPorId(citaActualizar.getIdTipoCita());
     if (tipoCitaEntidad == null || tipoCitaEntidad.getTipoCita() == null) return new CitaSalida();

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Mascota extends MascotaPadre {
+public class MascotaMinSalida extends MascotaPadre {
   private String id;
   private String codIdentificacion;
 }

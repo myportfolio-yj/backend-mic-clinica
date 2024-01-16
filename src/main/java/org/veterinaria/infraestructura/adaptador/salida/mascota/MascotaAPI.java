@@ -6,7 +6,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-import org.veterinaria.dominio.modelo.mascota.Mascota;
+import org.veterinaria.dominio.modelo.mascota.MascotaMinSalida;
 
 @Path("/")
 @RegisterRestClient
@@ -15,5 +15,5 @@ public interface MascotaAPI {
   @GET
   @Path("/mascota/{idMascota}")
   @Produces(MediaType.APPLICATION_JSON)
-  Mascota getMascotaPorId(@PathParam("idMascota") String idMascota);
+  MascotaMinSalida getMascotaPorId(@PathParam("idMascota") String idMascota);
 }
