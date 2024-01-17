@@ -73,7 +73,7 @@ public class FormularioServicio implements IFormularioServicio {
 
   private List<ReservaVeterinario> crearReservasVeterinario(List<String> intervalosTurnos) {
     return setConfig(veterinarioAPI::getVeterinarios,
-          p -> ReservaVeterinario.builder().verinario(p).turnos(setConfig(intervalosTurnos)).build());
+          p -> ReservaVeterinario.builder().veterinario(p).turnos(setConfig(intervalosTurnos)).build());
   }
 
   private List<ReservaPeluquero> crearReservasPeluquero(List<String> intervalosTurnos) {
@@ -113,6 +113,7 @@ public class FormularioServicio implements IFormularioServicio {
           .tipoCita(p.getTipoCita())
           .reservasPeluquero((p.getTipoCita().equals("Cita Peluqueria")) ? setPeluquero() : null)
           .reservasVeterinario((p.getTipoCita().equals("Cita Veterinaria")) ? setVeterinario() : null)
+          .atencionesPeluqueria((p.getTipoCita().equals("Cita Peluqueria")) ? atencionPeluqueroServicio.obtenerAtencionPeluquero() : null)
           .build();
   }
 
@@ -121,7 +122,6 @@ public class FormularioServicio implements IFormularioServicio {
     return FormularioSalida.builder()
           .mascotas(mascotaAPI.getMascotas().parallelStream().map(this::crearMascotaMinMinSalida).toList())
           .tiposCita(tipoCitaServicio.obtenerTipoCita().parallelStream().map(this::crearTipoCitaListaSalida).toList())
-          .atencionesPeluqueria(atencionPeluqueroServicio.obtenerAtencionPeluquero())
           .build();
   }
 
@@ -130,7 +130,6 @@ public class FormularioServicio implements IFormularioServicio {
     return FormularioSalida.builder()
           .mascotas(clienteAPI.getClientePorId(idCliente).getMascotas().parallelStream().map(this::crearMascotaMinMinSalida).toList())
           .tiposCita(tipoCitaServicio.obtenerTipoCita().parallelStream().map(this::crearTipoCitaListaSalida).toList())
-          .atencionesPeluqueria(atencionPeluqueroServicio.obtenerAtencionPeluquero())
           .build();
   }
 }

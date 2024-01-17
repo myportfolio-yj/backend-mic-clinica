@@ -17,5 +17,4 @@ import java.util.List;
 public class FormularioSalida {
   private List<MascotaMinMinSalida> mascotas;
   private List<TipoCitaListaSalida> tiposCita;
-  private List<AtencionPeluqueroSalida> atencionesPeluqueria;
 }

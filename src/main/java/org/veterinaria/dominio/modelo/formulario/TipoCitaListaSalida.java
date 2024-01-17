@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.veterinaria.dominio.modelo.atencionpeluquero.AtencionPeluqueroSalida;
 
 import java.util.List;
 
@@ -20,4 +21,5 @@ public class TipoCitaListaSalida {
   private String tipoCita;
   private List<ReservaPeluquero> reservasPeluquero;
   private List<ReservaVeterinario> reservasVeterinario;
+  private List<AtencionPeluqueroSalida> atencionesPeluqueria;
 }
