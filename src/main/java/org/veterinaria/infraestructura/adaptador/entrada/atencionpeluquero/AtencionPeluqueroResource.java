@@ -9,8 +9,12 @@ import org.veterinaria.dominio.modelo.atencionpeluquero.AtencionPeluqueroSalida;
 import org.veterinaria.dominio.servicio.atencionpeluquero.IAtencionPeluqueroServicio;
 
 public class AtencionPeluqueroResource implements IAtencionPeluqueroResource {
+  private final IAtencionPeluqueroServicio servicio;
+
   @Inject
-  IAtencionPeluqueroServicio servicio;
+  public AtencionPeluqueroResource(IAtencionPeluqueroServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response putAtencionPeluquero(String idAtencionPeluquero, AtencionPeluqueroActualizar atencionPeluqueroActualizar) {

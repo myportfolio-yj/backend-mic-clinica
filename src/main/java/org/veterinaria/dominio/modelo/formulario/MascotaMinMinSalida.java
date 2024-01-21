@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @RegisterForReflection
 public class MascotaMinMinSalida {
-  public String nombre;
-  public String apellido;
+  private String nombre;
+  private String apellido;
   private String id;
   private String codIdentificacion;
 }

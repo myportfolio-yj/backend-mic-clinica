@@ -12,8 +12,12 @@ import java.util.List;
 
 @ApplicationScoped
 public class MedicamentoServicio implements IMedicamentoServicio {
+  private final IMedicamentoRepositorio repositorio;
+
   @Inject
-  IMedicamentoRepositorio repositorio;
+  public MedicamentoServicio(IMedicamentoRepositorio repositorio) {
+    this.repositorio = repositorio;
+  }
 
   @Override
   public List<MedicamentoSalida> obtenerMedicamento() {

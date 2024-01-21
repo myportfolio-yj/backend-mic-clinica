@@ -9,8 +9,12 @@ import org.veterinaria.dominio.modelo.diagnostico.DiagnosticoSalida;
 import org.veterinaria.dominio.servicio.diagnostico.IDiagnosticoServicio;
 
 public class DiagnosticoResource implements IDiagnosticoResource {
+  private final IDiagnosticoServicio servicio;
+
   @Inject
-  IDiagnosticoServicio servicio;
+  public DiagnosticoResource(IDiagnosticoServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response postDiagnostico(DiagnosticoCrear diagnosticoCrear) {

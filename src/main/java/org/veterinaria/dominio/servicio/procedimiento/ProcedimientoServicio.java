@@ -12,8 +12,12 @@ import java.util.List;
 
 @ApplicationScoped
 public class ProcedimientoServicio implements IProcedimientoServicio {
+  private final IProcedimientoRepositorio repositorio;
+
   @Inject
-  IProcedimientoRepositorio repositorio;
+  public ProcedimientoServicio(IProcedimientoRepositorio repositorio) {
+    this.repositorio = repositorio;
+  }
 
   @Override
   public List<ProcedimientoSalida> obtenerProcedimiento() {

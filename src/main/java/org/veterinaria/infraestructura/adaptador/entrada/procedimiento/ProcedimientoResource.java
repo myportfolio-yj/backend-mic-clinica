@@ -9,8 +9,12 @@ import org.veterinaria.dominio.modelo.procedimiento.ProcedimientoSalida;
 import org.veterinaria.dominio.servicio.procedimiento.IProcedimientoServicio;
 
 public class ProcedimientoResource implements IProcedimientoResource {
+  private final IProcedimientoServicio servicio;
+
   @Inject
-  IProcedimientoServicio servicio;
+  public ProcedimientoResource(IProcedimientoServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response postProcedimiento(ProcedimientoCrear procedimientoCrear) {

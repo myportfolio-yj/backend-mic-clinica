@@ -12,8 +12,12 @@ import java.util.List;
 
 @ApplicationScoped
 public class AtencionPeluqueroServicio implements IAtencionPeluqueroServicio {
+  private final IAtencionPeluqueroRepositorio repositorio;
+
   @Inject
-  IAtencionPeluqueroRepositorio repositorio;
+  public AtencionPeluqueroServicio(IAtencionPeluqueroRepositorio repositorio) {
+    this.repositorio = repositorio;
+  }
 
   @Override
   public AtencionPeluqueroSalida actualizarAtencionPeluquero(String idAtencionPeluquero, AtencionPeluqueroActualizar atencionPeluquero) {

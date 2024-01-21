@@ -9,8 +9,12 @@ import org.veterinaria.dominio.modelo.geolocalizacion.GeolocalizacionSalida;
 import org.veterinaria.dominio.servicio.geolocalizacion.IGeolocalizacionServicio;
 
 public class GeolocalizacionResource implements IGeolocalizacionResource {
+  private final IGeolocalizacionServicio servicio;
+
   @Inject
-  IGeolocalizacionServicio servicio;
+  public GeolocalizacionResource(IGeolocalizacionServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response getGeolocalizacion() {

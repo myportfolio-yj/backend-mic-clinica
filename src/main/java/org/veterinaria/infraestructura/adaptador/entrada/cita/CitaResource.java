@@ -9,8 +9,12 @@ import org.veterinaria.dominio.modelo.cita.CitaSalida;
 import org.veterinaria.dominio.servicio.cita.ICitaServicio;
 
 public class CitaResource implements ICitaResource {
+  private final ICitaServicio servicio;
+
   @Inject
-  ICitaServicio servicio;
+  public CitaResource(ICitaServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response postCita(CitaCrear cita) {

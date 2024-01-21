@@ -15,10 +15,14 @@ import java.util.List;
 
 @ApplicationScoped
 public class TurnoServicio implements ITurnoServicio {
+  private final ITurnoRepositorio repositorio;
+  private final ITipoCitaRepositorio repositorioTipoCita;
+
   @Inject
-  ITurnoRepositorio repositorio;
-  @Inject
-  ITipoCitaRepositorio repositorioTipoCita;
+  public TurnoServicio(ITurnoRepositorio repositorio, ITipoCitaRepositorio repositorioTipoCita) {
+    this.repositorio = repositorio;
+    this.repositorioTipoCita = repositorioTipoCita;
+  }
 
   @Override
   public TurnoSalida obtenerTurnoPorId(String idTipoCita) {

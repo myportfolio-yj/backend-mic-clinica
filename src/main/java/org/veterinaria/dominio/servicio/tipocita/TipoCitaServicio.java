@@ -12,8 +12,12 @@ import java.util.List;
 
 @ApplicationScoped
 public class TipoCitaServicio implements ITipoCitaServicio {
+  private final ITipoCitaRepositorio repositorio;
+
   @Inject
-  ITipoCitaRepositorio repositorio;
+  public TipoCitaServicio(ITipoCitaRepositorio repositorio) {
+    this.repositorio = repositorio;
+  }
 
   @Override
   public TipoCitaSalida obtenerTipoCitaPorId(String idTipoCita) {

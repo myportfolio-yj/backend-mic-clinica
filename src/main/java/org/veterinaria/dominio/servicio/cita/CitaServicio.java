@@ -20,18 +20,20 @@ import java.util.List;
 public class CitaServicio implements ICitaServicio {
   public static final String FECHA_INVALIDA = "La fecha no es valida";
   public static final String CITA_PELUQUERIA = "Cita Peluqueria";
+  private final MascotaAPI mascotaService;
+  private final ClienteAPI clienteAPI;
+  private final ICitaRepositorio repositorio;
+  private final ITipoCitaRepositorio tipoCitaRepositorio;
+  private final IAtencionPeluqueroRepositorio atencionPeluqueroRepositorio;
+
   @Inject
-  ICitaRepositorio repositorio;
-  @Inject
-  @RestClient
-  MascotaAPI mascotaService;
-  @Inject
-  ITipoCitaRepositorio tipoCitaRepositorio;
-  @Inject
-  IAtencionPeluqueroRepositorio atencionPeluqueroRepositorio;
-  @Inject
-  @RestClient
-  ClienteAPI clienteAPI;
+  public CitaServicio(@RestClient MascotaAPI mascotaService, @RestClient ClienteAPI clienteAPI, ICitaRepositorio repositorio, ITipoCitaRepositorio tipoCitaRepositorio, IAtencionPeluqueroRepositorio atencionPeluqueroRepositorio) {
+    this.mascotaService = mascotaService;
+    this.clienteAPI = clienteAPI;
+    this.repositorio = repositorio;
+    this.tipoCitaRepositorio = tipoCitaRepositorio;
+    this.atencionPeluqueroRepositorio = atencionPeluqueroRepositorio;
+  }
 
   @Override
   public List<CitaSalida> obtenerCita() {

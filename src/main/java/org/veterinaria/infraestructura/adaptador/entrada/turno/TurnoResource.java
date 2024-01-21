@@ -9,8 +9,12 @@ import org.veterinaria.dominio.modelo.turno.TurnoSalida;
 import org.veterinaria.dominio.servicio.turno.ITurnoServicio;
 
 public class TurnoResource implements ITurnoResource {
+  private final ITurnoServicio servicio;
+
   @Inject
-  ITurnoServicio servicio;
+  public TurnoResource(ITurnoServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response putTurno(String idTurno, TurnoActualizar turno) {

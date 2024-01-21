@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @RegisterForReflection
 public class MascotaSalida {
-  public String nombre;
-  public String apellido;
+  private String nombre;
+  private String apellido;
   private String id;
   private String codIdentificacion;
 }

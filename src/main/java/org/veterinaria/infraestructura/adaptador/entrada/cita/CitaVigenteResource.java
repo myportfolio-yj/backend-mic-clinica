@@ -6,8 +6,12 @@ import org.veterinaria.aplicacion.puertos.entrada.cita.ICitaVigenteResource;
 import org.veterinaria.dominio.servicio.cita.ICitaServicio;
 
 public class CitaVigenteResource implements ICitaVigenteResource {
+  private final ICitaServicio servicio;
+
   @Inject
-  ICitaServicio servicio;
+  public CitaVigenteResource(ICitaServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response getCitaVigentes() {

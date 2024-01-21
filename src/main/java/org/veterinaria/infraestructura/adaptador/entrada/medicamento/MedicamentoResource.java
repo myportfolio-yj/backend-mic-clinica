@@ -9,8 +9,12 @@ import org.veterinaria.dominio.modelo.medicamento.MedicamentoSalida;
 import org.veterinaria.dominio.servicio.medicamento.IMedicamentoServicio;
 
 public class MedicamentoResource implements IMedicamentoResource {
+  private final IMedicamentoServicio servicio;
+
   @Inject
-  IMedicamentoServicio servicio;
+  public MedicamentoResource(IMedicamentoServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response postMedicamento(MedicamentoCrear medicamentoCrear) {

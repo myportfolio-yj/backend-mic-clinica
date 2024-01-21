@@ -6,8 +6,12 @@ import org.veterinaria.aplicacion.puertos.entrada.geolocalizacion.IGeolocalizaci
 import org.veterinaria.dominio.servicio.geolocalizacion.IGeolocalizacionServicio;
 
 public class GeolocalizacionMascotaResource implements IGeolocalizacionMascotaResource {
+  private final IGeolocalizacionServicio servicio;
+
   @Inject
-  IGeolocalizacionServicio servicio;
+  public GeolocalizacionMascotaResource(IGeolocalizacionServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response getGeolocalizacionPorIdMascota(String idMascota) {

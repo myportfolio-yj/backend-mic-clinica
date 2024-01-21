@@ -12,8 +12,13 @@ import java.util.List;
 
 @ApplicationScoped
 public class DiagnosticoServicio implements IDiagnosticoServicio {
+
+  private final IDiagnosticoRepositorio repositorio;
+
   @Inject
-  IDiagnosticoRepositorio repositorio;
+  public DiagnosticoServicio(IDiagnosticoRepositorio repositorio) {
+    this.repositorio = repositorio;
+  }
 
   @Override
   public List<DiagnosticoSalida> obtenerDiagnostico() {

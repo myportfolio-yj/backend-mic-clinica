@@ -10,8 +10,12 @@ import org.veterinaria.dominio.modelo.tipocita.TipoCitaSalida;
 import org.veterinaria.dominio.servicio.tipocita.ITipoCitaServicio;
 
 public class TipoCitaResource implements ITipoCitaResource {
+  private final ITipoCitaServicio servicio;
+
   @Inject
-  ITipoCitaServicio servicio;
+  public TipoCitaResource(ITipoCitaServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response putTipoCita(@NotNull String idTipoCita, TipoCitaActualizar tipoCita) {

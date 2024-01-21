@@ -6,16 +6,20 @@ import org.veterinaria.aplicacion.puertos.entrada.formulario.IFormularioResource
 import org.veterinaria.dominio.servicio.formulario.IFormularioServicio;
 
 public class FormularioResource implements IFormularioResource {
+  private final IFormularioServicio servicio;
+
   @Inject
-  IFormularioServicio formularioServicio;
+  public FormularioResource(IFormularioServicio servicio) {
+    this.servicio = servicio;
+  }
 
   @Override
   public Response getFormulario() {
-    return Response.ok(formularioServicio.obtenerFormulario()).build();
+    return Response.ok(servicio.obtenerFormulario()).build();
   }
 
   @Override
   public Response getFormularioCliente(String idCita) {
-    return Response.ok(formularioServicio.obtenerFormularioCliente(idCita)).build();
+    return Response.ok(servicio.obtenerFormularioCliente(idCita)).build();
   }
 }

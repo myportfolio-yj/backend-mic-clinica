@@ -20,20 +20,23 @@ import java.util.List;
 
 @ApplicationScoped
 public class GeolocalizacionServicio implements IGeolocalizacionServicio {
+  public static final String FECHA_FORMATO = "dd/MM/yyyy";
+  public static final String HORA_FORMATO = "HH:mm:ss";
+  public static final String MAP_URL = "https://maps.google.com/?q=";
+  private final IGeolocalizacionRepositorio repositorio;
+  private final MascotaAPI mascotaAPI;
+
   @Inject
-  IGeolocalizacionRepositorio repositorio;
-  @Inject
-  @RestClient
-  MascotaAPI mascotaAPI;
-  @Inject
-  @RestClient
-  ClienteAPI clienteAPI;
+  public GeolocalizacionServicio(IGeolocalizacionRepositorio repositorio, @RestClient MascotaAPI mascotaAPI) {
+    this.repositorio = repositorio;
+    this.mascotaAPI = mascotaAPI;
+  }
 
   @Override
   public List<GeolocalizacionSalida> obtenerGeolocalizacionPorIdMascota(String idMascota) {
     List<GeolocalizacionEntidad> geolocalizacionEntidades = repositorio.obtenerGeolocalizacionPorIdMascota(idMascota);
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+    SimpleDateFormat formatoFecha = new SimpleDateFormat(FECHA_FORMATO);
+    SimpleDateFormat formatoHora = new SimpleDateFormat(HORA_FORMATO);
     return geolocalizacionEntidades.parallelStream().map(p -> {
       Calendar calendar = Calendar.getInstance();
       calendar.setTime(p.getFechaHora());
@@ -43,7 +46,7 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
             .id(p.id.toString())
             .mascota(mascotaAPI.getMascotaPorId(p.getIdMascota()))
             .cliente(mascotaAPI.getMascotaClientePorId(p.getIdMascota()).getClientes())
-            .url("https://maps.google.com/?q=" + p.getLatitud() + ',' + p.getLongitud())
+            .url(MAP_URL + p.getLatitud() + ',' + p.getLongitud())
             .telefono(p.getTelefono())
             .fecha(formatoFecha.format(p.getFechaHora()))
             .hora(formatoHora.format(fechaHoraMenosCinco))
@@ -54,8 +57,8 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
   @Override
   public List<GeolocalizacionSalida> obtenerGeolocalizacion() {
     List<GeolocalizacionEntidad> geolocalizacionEntidades = repositorio.obtenerTodosGeolocalizacion();
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+    SimpleDateFormat formatoFecha = new SimpleDateFormat(FECHA_FORMATO);
+    SimpleDateFormat formatoHora = new SimpleDateFormat(HORA_FORMATO);
     return geolocalizacionEntidades.parallelStream().map(p -> {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(p.getFechaHora());
@@ -64,7 +67,7 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
             return GeolocalizacionSalida.builder()
                   .id(p.id.toString())
                   .mascota(mascotaAPI.getMascotaPorId(p.getIdMascota()))
-                  .url("https://maps.google.com/?q=" + p.getLatitud() + ',' + p.getLongitud())
+                  .url(MAP_URL + p.getLatitud() + ',' + p.getLongitud())
                   .telefono(p.getTelefono())
                   .fecha(formatoFecha.format(p.getFechaHora()))
                   .hora(formatoHora.format(fechaHoraMenosCinco))
@@ -76,8 +79,8 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
   @Override
   public GeolocalizacionSalida obtenerGeolocalizacionPorId(String idGeolocalizacion) {
     GeolocalizacionEntidad geolocalizacionEntidad = repositorio.obtenerGeolocalizacionPorId(idGeolocalizacion);
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+    SimpleDateFormat formatoFecha = new SimpleDateFormat(FECHA_FORMATO);
+    SimpleDateFormat formatoHora = new SimpleDateFormat(HORA_FORMATO);
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(geolocalizacionEntidad.getFechaHora());
     calendar.add(Calendar.HOUR_OF_DAY, -5);
@@ -85,7 +88,7 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
     return GeolocalizacionSalida.builder()
           .id(geolocalizacionEntidad.id.toString())
           .mascota(mascotaAPI.getMascotaPorId(geolocalizacionEntidad.getIdMascota()))
-          .url("https://maps.google.com/?q=" + geolocalizacionEntidad.getLatitud() + ',' + geolocalizacionEntidad.getLongitud())
+          .url(MAP_URL + geolocalizacionEntidad.getLatitud() + ',' + geolocalizacionEntidad.getLongitud())
           .telefono(geolocalizacionEntidad.getTelefono())
           .fecha(formatoFecha.format(geolocalizacionEntidad.getFechaHora()))
           .hora(formatoHora.format(fechaHoraMenosCinco))
@@ -119,8 +122,8 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
   @Override
   public GeolocalizacionSalida eliminarGeolocalizacion(String idGeolocalizacion) {
     GeolocalizacionEntidad geolocalizacionEntidad = repositorio.eliminarGeolocalizacion(idGeolocalizacion);
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+    SimpleDateFormat formatoFecha = new SimpleDateFormat(FECHA_FORMATO);
+    SimpleDateFormat formatoHora = new SimpleDateFormat(HORA_FORMATO);
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(geolocalizacionEntidad.getFechaHora());
     calendar.add(Calendar.HOUR_OF_DAY, -5);
@@ -128,7 +131,7 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
     return GeolocalizacionSalida.builder()
           .id(geolocalizacionEntidad.id.toString())
           .mascota(mascotaAPI.getMascotaPorId(geolocalizacionEntidad.getIdMascota()))
-          .url("https://maps.google.com/?q=" + geolocalizacionEntidad.getLatitud() + ',' + geolocalizacionEntidad.getLongitud())
+          .url(MAP_URL + geolocalizacionEntidad.getLatitud() + ',' + geolocalizacionEntidad.getLongitud())
           .telefono(geolocalizacionEntidad.getTelefono())
           .fecha(formatoFecha.format(geolocalizacionEntidad.getFechaHora()))
           .hora(formatoHora.format(fechaHoraMenosCinco))

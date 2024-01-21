@@ -28,22 +28,23 @@ import java.util.stream.IntStream;
 
 @ApplicationScoped
 public class FormularioServicio implements IFormularioServicio {
+  private final PeluqueroAPI peluqueroAPI;
+  private final VeterinarioAPI veterinarioAPI;
+  private final MascotaAPI mascotaAPI;
+  private final ITipoCitaServicio tipoCitaServicio;
+  private final IAtencionPeluqueroServicio atencionPeluqueroServicio;
+  private final ClienteAPI clienteAPI;
+
   @Inject
-  @RestClient
-  PeluqueroAPI peluqueroAPI;
-  @Inject
-  @RestClient
-  VeterinarioAPI veterinarioAPI;
-  @Inject
-  @RestClient
-  MascotaAPI mascotaAPI;
-  @Inject
-  ITipoCitaServicio tipoCitaServicio;
-  @Inject
-  IAtencionPeluqueroServicio atencionPeluqueroServicio;
-  @Inject
-  @RestClient
-  ClienteAPI clienteAPI;
+  public FormularioServicio(@RestClient PeluqueroAPI peluqueroAPI, @RestClient VeterinarioAPI veterinarioAPI, @RestClient MascotaAPI mascotaAPI, ITipoCitaServicio tipoCitaServicio, IAtencionPeluqueroServicio atencionPeluqueroServicio, @RestClient ClienteAPI clienteAPI) {
+    this.peluqueroAPI = peluqueroAPI;
+    this.veterinarioAPI = veterinarioAPI;
+    this.mascotaAPI = mascotaAPI;
+    this.tipoCitaServicio = tipoCitaServicio;
+    this.atencionPeluqueroServicio = atencionPeluqueroServicio;
+    this.clienteAPI = clienteAPI;
+  }
+
 
   private static List<String> getIntervalosTurnos(String... intervalos) {
     return Arrays.asList(intervalos);
