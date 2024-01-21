@@ -8,6 +8,7 @@ import org.veterinaria.dominio.modelo.geolocalizacion.GeolocalizacionActualizar;
 import org.veterinaria.dominio.modelo.geolocalizacion.GeolocalizacionCrear;
 import org.veterinaria.dominio.modelo.geolocalizacion.GeolocalizacionEntidad;
 import org.veterinaria.dominio.modelo.geolocalizacion.GeolocalizacionSalida;
+import org.veterinaria.infraestructura.adaptador.salida.cliente.ClienteAPI;
 import org.veterinaria.infraestructura.adaptador.salida.mascota.MascotaAPI;
 
 import java.text.SimpleDateFormat;
@@ -24,10 +25,13 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
   @Inject
   @RestClient
   MascotaAPI mascotaAPI;
+  @Inject
+  @RestClient
+  ClienteAPI clienteAPI;
 
   @Override
   public List<GeolocalizacionSalida> obtenerGeolocalizacionPorIdMascota(String idMascota) {
-    List<GeolocalizacionEntidad> geolocalizacionEntidades = repositorio.obtenerTodosGeolocalizacion();
+    List<GeolocalizacionEntidad> geolocalizacionEntidades = repositorio.obtenerGeolocalizacionPorIdMascota(idMascota);
     SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
     return geolocalizacionEntidades.parallelStream().map(p -> {
@@ -38,13 +42,15 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
       return GeolocalizacionSalida.builder()
             .id(p.id.toString())
             .mascota(mascotaAPI.getMascotaPorId(p.getIdMascota()))
-            .url("https://maps.google.com/?q="+p.getLatitud()+','+p.getLongitud())
+            .cliente(mascotaAPI.getMascotaClientePorId(p.getIdMascota()).getClientes())
+            .url("https://maps.google.com/?q=" + p.getLatitud() + ',' + p.getLongitud())
             .telefono(p.getTelefono())
             .fecha(formatoFecha.format(p.getFechaHora()))
             .hora(formatoHora.format(fechaHoraMenosCinco))
             .build();
     }).toList();
   }
+
   @Override
   public List<GeolocalizacionSalida> obtenerGeolocalizacion() {
     List<GeolocalizacionEntidad> geolocalizacionEntidades = repositorio.obtenerTodosGeolocalizacion();
@@ -79,7 +85,7 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
     return GeolocalizacionSalida.builder()
           .id(geolocalizacionEntidad.id.toString())
           .mascota(mascotaAPI.getMascotaPorId(geolocalizacionEntidad.getIdMascota()))
-          .url("https://maps.google.com/?q="+geolocalizacionEntidad.getLatitud()+','+geolocalizacionEntidad.getLongitud())
+          .url("https://maps.google.com/?q=" + geolocalizacionEntidad.getLatitud() + ',' + geolocalizacionEntidad.getLongitud())
           .telefono(geolocalizacionEntidad.getTelefono())
           .fecha(formatoFecha.format(geolocalizacionEntidad.getFechaHora()))
           .hora(formatoHora.format(fechaHoraMenosCinco))
@@ -97,6 +103,7 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
     geolocalizacionEntidad = repositorio.crearGeolocalizacion(geolocalizacionEntidad);
     return this.obtenerGeolocalizacionPorId(geolocalizacionEntidad.id.toString());
   }
+
   @Override
   public GeolocalizacionSalida actualizarGeolocalizacion(String idGeolocalizacion, GeolocalizacionActualizar geolocalizacionActualizar) {
     GeolocalizacionEntidad geolocalizacionEntidad = new GeolocalizacionEntidad();
@@ -121,7 +128,7 @@ public class GeolocalizacionServicio implements IGeolocalizacionServicio {
     return GeolocalizacionSalida.builder()
           .id(geolocalizacionEntidad.id.toString())
           .mascota(mascotaAPI.getMascotaPorId(geolocalizacionEntidad.getIdMascota()))
-          .url("https://maps.google.com/?q="+geolocalizacionEntidad.getLatitud()+','+geolocalizacionEntidad.getLongitud())
+          .url("https://maps.google.com/?q=" + geolocalizacionEntidad.getLatitud() + ',' + geolocalizacionEntidad.getLongitud())
           .telefono(geolocalizacionEntidad.getTelefono())
           .fecha(formatoFecha.format(geolocalizacionEntidad.getFechaHora()))
           .hora(formatoHora.format(fechaHoraMenosCinco))

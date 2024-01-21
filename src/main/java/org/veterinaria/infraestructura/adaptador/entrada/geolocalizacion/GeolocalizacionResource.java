@@ -23,11 +23,6 @@ public class GeolocalizacionResource implements IGeolocalizacionResource {
   }
 
   @Override
-  public Response getGeolocalizacionPorIdMascota(String idMascota) {
-    return Response.ok(servicio.obtenerGeolocalizacionPorIdMascota(idMascota)).build();
-  }
-
-  @Override
   public Response postGeolocalizacion(GeolocalizacionCrear geolocalizacionCrear) {
     GeolocalizacionSalida geolocalizacionSalida = servicio.crearGeolocalizacion(geolocalizacionCrear);
     return Response.status(Response.Status.CREATED).entity(geolocalizacionSalida).build();

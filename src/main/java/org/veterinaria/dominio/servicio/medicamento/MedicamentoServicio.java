@@ -44,6 +44,7 @@ public class MedicamentoServicio implements IMedicamentoServicio {
     medicamentoEntidad = repositorio.crearMedicamento(medicamentoEntidad);
     return this.obtenerMedicamentoPorId(medicamentoEntidad.id.toString());
   }
+
   @Override
   public MedicamentoSalida actualizarMedicamento(String idMedicamento, MedicamentoActualizar medicamentoActualizar) {
     MedicamentoEntidad medicamentoEntidad = new MedicamentoEntidad();

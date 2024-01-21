@@ -52,7 +52,7 @@ public class ProcedimientoRepositorio implements PanacheMongoRepository<Procedim
     return this.actualizarProcedimiento(idProcedimiento, procedimiento);
   }
 
-  private Optional<ProcedimientoEntidad> findEntidadById(String idMedicamento) {
-    return findByIdOptional(new ObjectId(idMedicamento));
+  private Optional<ProcedimientoEntidad> findEntidadById(String idProcedimiento) {
+    return findByIdOptional(new ObjectId(idProcedimiento));
   }
 }

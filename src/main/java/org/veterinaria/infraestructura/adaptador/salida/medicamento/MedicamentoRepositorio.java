@@ -3,13 +3,9 @@ package org.veterinaria.infraestructura.adaptador.salida.medicamento;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
-import org.veterinaria.aplicacion.puertos.salida.cita.ICitaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.medicamento.IMedicamentoRepositorio;
-import org.veterinaria.dominio.modelo.cita.CitaEntidad;
 import org.veterinaria.dominio.modelo.medicamento.MedicamentoEntidad;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 

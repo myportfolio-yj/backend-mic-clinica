@@ -11,6 +11,7 @@ import org.veterinaria.dominio.modelo.atencionpeluquero.AtencionPeluqueroEntidad
 import org.veterinaria.dominio.modelo.cita.*;
 import org.veterinaria.dominio.modelo.mascota.MascotaMinSalida;
 import org.veterinaria.dominio.modelo.tipocita.TipoCitaEntidad;
+import org.veterinaria.infraestructura.adaptador.salida.cliente.ClienteAPI;
 import org.veterinaria.infraestructura.adaptador.salida.mascota.MascotaAPI;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public class CitaServicio implements ICitaServicio {
   ITipoCitaRepositorio tipoCitaRepositorio;
   @Inject
   IAtencionPeluqueroRepositorio atencionPeluqueroRepositorio;
+  @Inject
+  @RestClient
+  ClienteAPI clienteAPI;
 
   @Override
   public List<CitaSalida> obtenerCita() {
@@ -87,7 +91,7 @@ public class CitaServicio implements ICitaServicio {
   private CitaSalida getCitaSalida(CitaEntidad citaEntidad) {
     return CitaSalida.builder()
           .id(citaEntidad.id.toString())
-          .idCliente(citaEntidad.getIdCliente())
+          .cliente(clienteAPI.getClienteMinPorId(citaEntidad.getIdCliente()))
           .idMascota(citaEntidad.getIdMascota())
           .nombreMascota(mascotaService.getMascotaPorId(citaEntidad.getIdMascota()).getNombre())
           .idTipoCita(citaEntidad.getIdTipoCita())

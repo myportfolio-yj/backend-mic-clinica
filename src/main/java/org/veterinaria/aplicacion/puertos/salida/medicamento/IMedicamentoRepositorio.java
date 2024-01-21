@@ -1,6 +1,5 @@
 package org.veterinaria.aplicacion.puertos.salida.medicamento;
 
-import org.veterinaria.dominio.modelo.atencionpeluquero.AtencionPeluqueroEntidad;
 import org.veterinaria.dominio.modelo.medicamento.MedicamentoEntidad;
 
 import java.util.List;

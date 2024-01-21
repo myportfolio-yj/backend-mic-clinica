@@ -15,7 +15,7 @@ import java.util.List;
 @RegisterForReflection
 public class CitaSalida {
   private String id;
-  private String idCliente;
+  private ClienteMinSalida cliente;
   private String nombreMascota;
   private String idMascota;
   private String tipoCita;

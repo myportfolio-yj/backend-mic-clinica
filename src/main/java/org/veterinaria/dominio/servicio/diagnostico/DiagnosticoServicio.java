@@ -44,6 +44,7 @@ public class DiagnosticoServicio implements IDiagnosticoServicio {
     diagnosticoEntidad = repositorio.crearDiagnostico(diagnosticoEntidad);
     return this.obtenerDiagnosticoPorId(diagnosticoEntidad.id.toString());
   }
+
   @Override
   public DiagnosticoSalida actualizarDiagnostico(String idDiagnostico, DiagnosticoActualizar diagnosticoActualizar) {
     DiagnosticoEntidad diagnosticoEntidad = new DiagnosticoEntidad();

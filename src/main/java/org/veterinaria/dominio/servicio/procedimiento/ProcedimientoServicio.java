@@ -44,6 +44,7 @@ public class ProcedimientoServicio implements IProcedimientoServicio {
     procedimientoEntidad = repositorio.crearProcedimiento(procedimientoEntidad);
     return this.obtenerProcedimientoPorId(procedimientoEntidad.id.toString());
   }
+
   @Override
   public ProcedimientoSalida actualizarProcedimiento(String idProcedimiento, ProcedimientoActualizar procedimientoActualizar) {
     ProcedimientoEntidad procedimientoEntidad = new ProcedimientoEntidad();

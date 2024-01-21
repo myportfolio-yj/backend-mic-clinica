@@ -7,7 +7,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/geolocalizacion/mascota")
+@Path("/geolocalizacion-mascota")
 public interface IObtenerGeolocalizacionPorIdMascota {
   @GET
   @Path("/{idMascota}")

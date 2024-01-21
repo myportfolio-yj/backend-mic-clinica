@@ -8,7 +8,8 @@ public interface IGeolocalizacionRepositorio {
   List<GeolocalizacionEntidad> obtenerTodosGeolocalizacion();
 
   GeolocalizacionEntidad obtenerGeolocalizacionPorId(String idGeolocalizacion);
-  List<GeolocalizacionEntidad>  obtenerGeolocalizacionPorIdMascota(String idMascota);
+
+  List<GeolocalizacionEntidad> obtenerGeolocalizacionPorIdMascota(String idMascota);
 
   GeolocalizacionEntidad crearGeolocalizacion(GeolocalizacionEntidad geolocalizacionEntidad);
 

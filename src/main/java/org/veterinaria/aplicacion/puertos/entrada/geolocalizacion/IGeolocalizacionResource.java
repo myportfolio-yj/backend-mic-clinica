@@ -4,6 +4,5 @@ public interface IGeolocalizacionResource extends IActualizarGeolocalizacion,
       ICrearGeolocalizacion,
       IEliminarGeolocalizacion,
       IObtenerGeolocalizacion,
-      IObtenerGeolocalizacionPorId,
-      IObtenerGeolocalizacionPorIdMascota {
+      IObtenerGeolocalizacionPorId {
 }
