@@ -12,15 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MascotaPadre {
-  public String nombre;
-  public String apellido;
-  public String fechaNacimiento;
-  public SexoSalida sexo;
-  public EspecieSalida especie;
-  public RazaSalida raza;
-  public Boolean esterilizado;
-  public List<AlergiaSalida> alergias;
-  public List<VacunaSalida> vacunas;
-  public String foto;
-  public String qr;
+  protected String nombre;
+  protected String apellido;
+  protected String fechaNacimiento;
+  protected SexoSalida sexo;
+  protected EspecieSalida especie;
+  protected RazaSalida raza;
+  protected Boolean esterilizado;
+  protected List<AlergiaSalida> alergias;
+  protected List<VacunaSalida> vacunas;
+  protected String foto;
+  protected String qr;
 }
