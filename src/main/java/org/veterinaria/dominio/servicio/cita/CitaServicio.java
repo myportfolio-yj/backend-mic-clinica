@@ -36,6 +36,11 @@ public class CitaServicio implements ICitaServicio {
   }
 
   @Override
+  public List<CitaSalida> obtenerCitaHistorial() {
+    return repositorio.obtenerTodosCitaAtendidas().parallelStream().map(this::getCitaSalida).toList();
+  }
+
+  @Override
   public List<CitaSalida> obtenerCita() {
     return repositorio.obtenerTodosCita().parallelStream().map(this::getCitaSalida).toList();
   }
@@ -96,6 +101,7 @@ public class CitaServicio implements ICitaServicio {
           .cliente(clienteAPI.getClienteMinPorId(citaEntidad.getIdCliente()))
           .idMascota(citaEntidad.getIdMascota())
           .nombreMascota(mascotaService.getMascotaPorId(citaEntidad.getIdMascota()).getNombre())
+          .mascota(mascotaService.getMascotaPorId(citaEntidad.getIdMascota()))
           .idTipoCita(citaEntidad.getIdTipoCita())
           .tipoCita(tipoCitaRepositorio.obtenerTipoCitaPorId(citaEntidad.getIdTipoCita()).getTipoCita())
           .atencionesPeluqueria(
@@ -111,6 +117,9 @@ public class CitaServicio implements ICitaServicio {
           .fecha(CitaPadre.convertirFechaAString(citaEntidad.getFecha()))
           .turno(citaEntidad.getTurno())
           .observaciones(citaEntidad.getObservaciones())
+          .checkIn(citaEntidad.getCheckIn())
+          .idAtencion((citaEntidad.getIdAtencion()))
+          .recetas((citaEntidad.getRecetas()))
           .build();
   }
 
@@ -123,6 +132,8 @@ public class CitaServicio implements ICitaServicio {
     citaEntidad.setFecha(CitaPadre.convertirFecha(fecha));
     citaEntidad.setTurno(turno);
     citaEntidad.setObservaciones(observaciones);
+    citaEntidad.setIdAtencion(null);
+    citaEntidad.setRecetas(null);
     return citaEntidad;
   }
 
@@ -134,5 +145,14 @@ public class CitaServicio implements ICitaServicio {
   @Override
   public List<CitaSalida> obtenerCitasVigentes() {
     return repositorio.obtenerCitasVigentes().parallelStream().map(this::getCitaSalida).toList();
+  }
+
+  @Override
+  public CitaSalida checkIn(String idCita) {
+    CitaSalida citaSalida = this.obtenerCitaPorId(idCita);
+    CitaEntidad citaEntidad = crearCitaEntidad(citaSalida.getCliente().getId(), citaSalida.getIdMascota(), citaSalida.getIdTipoCita(), citaSalida.getAtencionesPeluqueria(), citaSalida.getFecha(), citaSalida.getTurno(), citaSalida.getObservaciones());
+    citaEntidad.setCheckIn(true);
+    repositorio.actualizarCita(idCita, citaEntidad);
+    return this.obtenerCitaPorId(idCita);
   }
 }

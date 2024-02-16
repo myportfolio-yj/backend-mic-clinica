@@ -7,6 +7,8 @@ import java.util.List;
 public interface ICitaRepositorio {
   List<CitaEntidad> obtenerTodosCita();
 
+  List<CitaEntidad> obtenerTodosCitaAtendidas();
+
   List<CitaEntidad> obtenerCitasVigentes();
 
   List<CitaEntidad> obtenerCitasVigentesPorIdCliente(String idCliente);

@@ -21,11 +21,20 @@ public class CitaRepositorio implements PanacheMongoRepository<CitaEntidad>, ICi
   }
 
   @Override
+  public List<CitaEntidad> obtenerTodosCitaAtendidas() {
+    return listAll().parallelStream()
+          .filter(p -> ((p.getCheckIn() != null && p.getCheckIn() == true) && (p.getDelete() == null || !p.getDelete())))
+          .toList();
+  }
+
+  @Override
   public List<CitaEntidad> obtenerCitasVigentes() {
     LocalDate hoy = LocalDate.now();
     return this.obtenerTodosCita().parallelStream()
-          .filter(p -> p.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(hoy) ||
-                p.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(hoy))
+          .filter(p -> (p.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(hoy) ||
+                p.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(hoy)) && (
+                p.getCheckIn() == null || !p.getCheckIn()
+          ))
           .toList();
   }
 
@@ -56,11 +65,16 @@ public class CitaRepositorio implements PanacheMongoRepository<CitaEntidad>, ICi
           .map(p -> {
             p.setIdMascota(cita.getIdMascota());
             p.setIdTipoCita(cita.getIdTipoCita());
-            p.setAtencionesPeluqueria(cita.getAtencionesPeluqueria());
+            p.setAtencionesPeluqueria(p.getAtencionesPeluqueria());
             p.setFecha(cita.getFecha());
             p.setTurno(cita.getTurno());
             p.setObservaciones(cita.getObservaciones());
             p.setDelete(cita.getDelete());
+            if (cita.getCheckIn() != null) {
+              p.setCheckIn(cita.getCheckIn());
+            }
+            p.setIdAtencion(cita.getIdAtencion());
+            p.setRecetas(cita.getRecetas());
             update(p);
             return p;
           })

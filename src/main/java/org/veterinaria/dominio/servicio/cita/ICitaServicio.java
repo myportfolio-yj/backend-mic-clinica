@@ -7,5 +7,7 @@ public interface ICitaServicio extends
       IObtenerCitaServicio,
       IObtenerCitaPorIdServicio,
       IObtenerCitaVigentesServicio,
-      IObtenerCitaVigentesPorIdClienteServicio {
+      IObtenerCitaVigentesPorIdClienteServicio,
+      ICheckInServicio,
+      IObtenerHistorial {
 }

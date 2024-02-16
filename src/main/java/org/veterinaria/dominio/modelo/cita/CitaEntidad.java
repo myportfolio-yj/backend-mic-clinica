@@ -19,5 +19,8 @@ public class CitaEntidad extends PanacheMongoEntity {
   private Date fecha;
   private String turno;
   private String observaciones;
+  private Boolean checkIn;
+  private String idAtencion;
+  private List<String> recetas;
   private Boolean delete;
 }

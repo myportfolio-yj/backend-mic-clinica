@@ -8,7 +8,6 @@ import org.veterinaria.dominio.modelo.geolocalizacion.GeolocalizacionActualizar;
 import org.veterinaria.dominio.modelo.geolocalizacion.GeolocalizacionCrear;
 import org.veterinaria.dominio.modelo.geolocalizacion.GeolocalizacionEntidad;
 import org.veterinaria.dominio.modelo.geolocalizacion.GeolocalizacionSalida;
-import org.veterinaria.infraestructura.adaptador.salida.cliente.ClienteAPI;
 import org.veterinaria.infraestructura.adaptador.salida.mascota.MascotaAPI;
 
 import java.text.SimpleDateFormat;
